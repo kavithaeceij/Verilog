@@ -1,0 +1,46 @@
+module parity(input data[3:0],input mode,output reg parity);
+always @(*) begin
+        if (mode == 1'b0) begin
+            // Generate EVEN parity
+            even_parity_generator(data, parity);
+        end
+        else begin
+            // Generate ODD parity
+            odd_parity_generator(data, parity);
+        end
+    end
+
+endmodule
+
+
+
+
+
+task even_parity_generator;
+input [3:0] data;
+output  parity_out;
+integer i;
+reg temp;
+
+begin
+    temp = 0;
+  for(i=0;i<4;i++)begin
+    temp = temp ^data[i]; end
+    parity_out = temp;
+end
+endtask
+
+task odd_parity_generator;
+input [3:0] data;
+output  parity_out;
+integer i;
+reg temp;
+
+begin
+    temp = 0;
+  for(i=0;i<4;i++)begin
+    temp = temp ^data[i]; end
+    parity_out = ~temp;
+end
+endtask
+
