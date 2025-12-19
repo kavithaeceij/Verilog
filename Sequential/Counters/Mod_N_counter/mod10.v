@@ -1,0 +1,23 @@
+module mod_counter (
+    input        clk,        // Clock
+    input        rst,        // Synchronous reset
+    input        enable,     // Count enable
+    output reg [3:0] count   // 4-bit counter output
+);
+
+    always @(posedge clk) begin
+        if (rst) begin
+            // Reset counter to zero
+            count <= 4'b0000;
+        end
+        else if (enable) begin
+            // Mod-10 behavior: wrap after 9
+            if (count == 4'd9)
+                count <= 4'b0000;
+            else
+                count <= count + 1'b1;
+        end
+        // else: enable = 0, hold current value
+    end
+
+endmodule
